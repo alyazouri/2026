@@ -6,12 +6,23 @@
 // ██████╔╝   ██║          ██║   ██║  ██║███████╗╚██████╔╝╚██████╔╝██║  ██║██║
 // ╚═════╝    ╚═╝          ╚═╝   ╚═╝  ╚═╝╚══════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝
 // ═══════════════════════════════════════════════════════════════════
-// JORDAN ONLY - ULTIMATE GAME BOOSTER v3.1 - EXPANDED IP RANGES
+// JORDAN ONLY - FORCE MATCHMAKING v4.0 - العب مع أردنيين فقط
 // DNS: 1.1.1.1 - 1.0.0.1
-// RESET DEVICE AFTER INSTALLATION
+// RESET DEVICE + CLEAR GAME CACHE AFTER INSTALLATION
 // ═══════════════════════════════════════════════════════════════════
 
-// ================= GAME BOOSTER CONFIGURATION =================
+// ================= AGGRESSIVE JORDAN-ONLY CONFIG =================
+var FORCE_JORDAN = {
+  enabled: true,                    // فرض الأردن
+  blockNonJordan: true,             // امنع غير الأردن
+  blockMiddleEast: true,            // امنع الشرق الأوسط (UAE, Saudi, Egypt)
+  blockEurope: true,                // امنع أوروبا
+  blockAsia: true,                  // امنع آسيا
+  matchmakingDelay: 3000,           // تأخير 3 ثواني للماتش ميكنق
+  forceRegionLock: true,            // قفل المنطقة
+  rejectMixedLobbies: true          // ارفض اللوبيات المختلطة
+};
+
 var BOOSTER_CONFIG = {
   aggressiveCaching: true,
   predictiveLoading: true,
@@ -33,7 +44,6 @@ var BOOSTER_CONFIG = {
   dynamicTimeout: true
 };
 
-// ================= CONFIGURATION =================
 var CONFIG = {
   DNS_CACHE_TTL: 120000,
   SESSION_TIMEOUT: 300000,
@@ -44,7 +54,7 @@ var CONFIG = {
   HEALTH_CHECK_INTERVAL: 30000
 };
 
-// ================= PROXIES - JORDAN STABLE PATH =================
+// ================= PROXIES - JORDAN ONLY =================
 var MATCH_JO = "PROXY 46.185.131.218:20001";
 var MATCH_JO_BACKUP = "PROXY 212.35.66.45:20001";
 
@@ -57,112 +67,112 @@ var LOBBY_POOL = [
 var BLOCK = "PROXY 127.0.0.1:9";
 var DIRECT = "DIRECT";
 
-// ═══════════════════════════════════════════════════════════════════
-// 🆕 EXPANDED JORDAN IP RANGES - شامل كل الشبكات الأردنية
-// ═══════════════════════════════════════════════════════════════════
-var MATCH_ALLOWED_IPV4 = [
-  // ========== Orange Jordan (أورنج) ==========
-  ["46.185.0.0","255.255.0.0"],     // Primary Orange
-  ["212.35.0.0","255.255.0.0"],     // Secondary Orange
-  ["212.118.0.0","255.255.0.0"],    // Orange Business
-  
-  // ========== Zain Jordan (زين) ==========
-  ["176.29.0.0","255.255.0.0"],     // Primary Zain
-  ["176.28.0.0","255.254.0.0"],     // Secondary Zain
-  ["188.161.0.0","255.255.0.0"],    // Zain Mobile
-  ["185.107.0.0","255.255.0.0"],    // Zain 4G/5G
-  
-  // ========== Umniah (أمنية) ==========
-  ["82.212.0.0","255.254.0.0"],     // Primary Umniah
-  ["82.213.0.0","255.255.0.0"],     // Secondary Umniah
-  ["37.238.0.0","255.255.0.0"],     // Umniah Broadband
-  
-  // ========== Fiber & Business (فايبر وشركات) ==========
-  ["149.200.0.0","255.255.0.0"],    // Jordan Fiber
-  ["86.108.0.0","255.254.0.0"],     // Business Lines
-  ["92.253.0.0","255.255.0.0"],     // Enterprise
-  ["94.249.0.0","255.255.0.0"],     // Batelco Jordan
-  
-  // ========== Government & ISPs (حكومي ومزودين) ==========
-  ["213.139.0.0","255.255.0.0"],    // Government ISP (expanded)
-  ["195.229.0.0","255.255.0.0"],    // Jordan Telecom
-  ["31.210.0.0","255.255.0.0"],     // Additional ISP
-  
-  // 🆕 ========== NEW ADDITIONS - إضافات جديدة ==========
-  ["5.0.0.0","255.0.0.0"],          // RIPE Jordan Block
-  ["37.48.0.0","255.240.0.0"],      // Mobile Networks
-  ["78.135.0.0","255.255.0.0"],     // Home Internet
-  ["85.115.0.0","255.255.0.0"],     // Regional ISP
-  ["87.236.0.0","255.254.0.0"],     // Broadband Jordan
-  ["91.102.0.0","255.254.0.0"],     // Additional Mobile
-  ["109.224.0.0","255.224.0.0"],    // Large ISP Block
-  ["151.236.0.0","255.252.0.0"],    // New Orange Range
-  ["176.110.0.0","255.254.0.0"],    // Zain Expansion
-  ["185.13.160.0","255.255.224.0"], // Data Centers
-  ["185.88.176.0","255.255.240.0"], // Cloud Jordan
-  ["188.247.0.0","255.255.0.0"],    // Additional Range
-  ["193.188.136.0","255.255.248.0"],// University Networks
-  ["194.126.96.0","255.255.224.0"], // Education JO
-  ["195.158.0.0","255.254.0.0"],    // Legacy Jordan
-  ["212.69.0.0","255.255.0.0"],     // Extended Orange
-  ["213.6.0.0","255.254.0.0"],      // Additional ISP
-  
-  // 🆕 ========== IPv4 Smaller Blocks - بلوكات صغيرة ==========
-  ["37.252.224.0","255.255.224.0"], // Small ISP 1
-  ["46.19.0.0","255.255.0.0"],      // Small ISP 2
-  ["62.116.128.0","255.255.128.0"], // Regional 1
-  ["77.44.0.0","255.252.0.0"],      // Regional 2
-  ["80.66.176.0","255.255.240.0"],  // Business Small
-  ["81.16.0.0","255.240.0.0"],      // Large Regional
-  ["93.117.0.0","255.255.0.0"],     // Mobile Extension
-  ["95.132.0.0","255.252.0.0"]      // Additional Mobile
-];
-
-var LOBBY_ALLOWED_IPV4 = [
-  // ========== Same as MATCH + Additional Lobby Ranges ==========
+// ================= JORDAN ONLY IP RANGES - COMPLETE =================
+var JORDAN_IPV4 = [
+  // Orange Jordan
   ["46.185.0.0","255.255.0.0"],
   ["212.35.0.0","255.255.0.0"],
   ["212.118.0.0","255.255.0.0"],
+  ["212.69.0.0","255.255.0.0"],
+  ["151.236.0.0","255.252.0.0"],
+  
+  // Zain Jordan
   ["176.29.0.0","255.255.0.0"],
   ["176.28.0.0","255.254.0.0"],
+  ["176.110.0.0","255.254.0.0"],
   ["188.161.0.0","255.255.0.0"],
   ["185.107.0.0","255.255.0.0"],
+  
+  // Umniah Jordan
   ["82.212.0.0","255.254.0.0"],
   ["82.213.0.0","255.255.0.0"],
   ["37.238.0.0","255.255.0.0"],
+  
+  // Fiber & Business
   ["149.200.0.0","255.255.0.0"],
   ["86.108.0.0","255.254.0.0"],
   ["92.253.0.0","255.255.0.0"],
   ["94.249.0.0","255.255.0.0"],
+  
+  // Government & ISPs
   ["213.139.0.0","255.255.0.0"],
+  ["213.6.0.0","255.254.0.0"],
   ["195.229.0.0","255.255.0.0"],
+  ["195.158.0.0","255.254.0.0"],
   ["31.210.0.0","255.255.0.0"],
+  
+  // Mobile & Additional
   ["5.0.0.0","255.0.0.0"],
   ["37.48.0.0","255.240.0.0"],
-  ["78.135.0.0","255.255.0.0"],
-  ["85.115.0.0","255.255.0.0"],
-  ["87.236.0.0","255.254.0.0"],
-  ["91.102.0.0","255.254.0.0"],
-  ["109.224.0.0","255.224.0.0"],
-  ["151.236.0.0","255.252.0.0"],
-  ["176.110.0.0","255.254.0.0"],
-  ["185.13.160.0","255.255.224.0"],
-  ["185.88.176.0","255.255.240.0"],
-  ["188.247.0.0","255.255.0.0"],
-  ["193.188.136.0","255.255.248.0"],
-  ["194.126.96.0","255.255.224.0"],
-  ["195.158.0.0","255.254.0.0"],
-  ["212.69.0.0","255.255.0.0"],
-  ["213.6.0.0","255.254.0.0"],
   ["37.252.224.0","255.255.224.0"],
   ["46.19.0.0","255.255.0.0"],
   ["62.116.128.0","255.255.128.0"],
   ["77.44.0.0","255.252.0.0"],
+  ["78.135.0.0","255.255.0.0"],
   ["80.66.176.0","255.255.240.0"],
   ["81.16.0.0","255.240.0.0"],
+  ["85.115.0.0","255.255.0.0"],
+  ["87.236.0.0","255.254.0.0"],
+  ["91.102.0.0","255.254.0.0"],
   ["93.117.0.0","255.255.0.0"],
-  ["95.132.0.0","255.252.0.0"]
+  ["95.132.0.0","255.252.0.0"],
+  ["109.224.0.0","255.224.0.0"],
+  ["185.13.160.0","255.255.224.0"],
+  ["185.88.176.0","255.255.240.0"],
+  ["188.247.0.0","255.255.0.0"],
+  ["193.188.136.0","255.255.248.0"],
+  ["194.126.96.0","255.255.224.0"]
 ];
+
+// ================= BLOCK NON-JORDAN REGIONS =================
+var BLOCKED_REGIONS = {
+  // UAE
+  UAE: [
+    ["5.36.0.0","255.252.0.0"],
+    ["31.14.0.0","255.254.0.0"],
+    ["37.230.0.0","255.254.0.0"],
+    ["80.78.16.0","255.255.240.0"],
+    ["82.148.0.0","255.252.0.0"],
+    ["85.92.0.0","255.252.0.0"]
+  ],
+  
+  // Saudi Arabia
+  SAUDI: [
+    ["5.36.0.0","255.252.0.0"],
+    ["31.168.0.0","255.248.0.0"],
+    ["37.234.0.0","255.254.0.0"],
+    ["46.28.0.0","255.252.0.0"],
+    ["78.93.0.0","255.255.0.0"],
+    ["91.102.0.0","255.254.0.0"]
+  ],
+  
+  // Egypt
+  EGYPT: [
+    ["41.32.0.0","255.224.0.0"],
+    ["41.64.0.0","255.192.0.0"],
+    ["41.128.0.0","255.192.0.0"],
+    ["62.68.0.0","255.252.0.0"],
+    ["81.21.0.0","255.255.0.0"]
+  ],
+  
+  // Europe (sample)
+  EUROPE: [
+    ["2.16.0.0","255.240.0.0"],
+    ["5.56.0.0","255.248.0.0"],
+    ["31.12.0.0","255.252.0.0"],
+    ["77.68.0.0","255.252.0.0"],
+    ["78.8.0.0","255.248.0.0"]
+  ],
+  
+  // Asia (sample)
+  ASIA: [
+    ["1.0.0.0","255.0.0.0"],
+    ["14.0.0.0","255.0.0.0"],
+    ["27.0.0.0","255.0.0.0"],
+    ["36.0.0.0","255.0.0.0"],
+    ["42.0.0.0","255.0.0.0"]
+  ]
+};
 
 // ================= SESSION STATE =================
 var SESSION = {
@@ -190,29 +200,69 @@ var SESSION = {
   ispSamples: [],
   totalRequests: 0,
   blockedRequests: 0,
-  jordanPlayersFound: 0,  // 🆕 Counter
-  lobbyRotation: 0
+  jordanPlayersFound: 0,
+  nonJordanBlocked: 0,
+  lobbyRotation: 0,
+  lastMatchmakingTime: 0
 };
 
-// ================= GAME BOOSTER - ISP DETECTOR (Jordan Only) =================
+// ================= REGION BLOCKER =================
+var REGION_BLOCKER = {
+  isBlocked: function(ip) {
+    if (!FORCE_JORDAN.enabled) return false;
+    
+    // Check UAE
+    if (FORCE_JORDAN.blockMiddleEast) {
+      if (this.isInRegion(ip, BLOCKED_REGIONS.UAE)) {
+        SESSION.nonJordanBlocked++;
+        return true;
+      }
+      if (this.isInRegion(ip, BLOCKED_REGIONS.SAUDI)) {
+        SESSION.nonJordanBlocked++;
+        return true;
+      }
+      if (this.isInRegion(ip, BLOCKED_REGIONS.EGYPT)) {
+        SESSION.nonJordanBlocked++;
+        return true;
+      }
+    }
+    
+    // Check Europe
+    if (FORCE_JORDAN.blockEurope) {
+      if (this.isInRegion(ip, BLOCKED_REGIONS.EUROPE)) {
+        SESSION.nonJordanBlocked++;
+        return true;
+      }
+    }
+    
+    // Check Asia
+    if (FORCE_JORDAN.blockAsia) {
+      if (this.isInRegion(ip, BLOCKED_REGIONS.ASIA)) {
+        SESSION.nonJordanBlocked++;
+        return true;
+      }
+    }
+    
+    return false;
+  },
+  
+  isInRegion: function(ip, ranges) {
+    for (var i = 0; i < ranges.length; i++) {
+      if (isInNet(ip, ranges[i][0], ranges[i][1])) return true;
+    }
+    return false;
+  }
+};
+
+// ================= ISP DETECTOR =================
 var ISP_DETECTOR = {
   database: {
     "46.185": {isp: "Orange", priority: 100, tier: 1},
     "212.35": {isp: "Orange", priority: 100, tier: 1},
-    "212.118": {isp: "Orange", priority: 98, tier: 1},
     "176.29": {isp: "Zain", priority: 95, tier: 1},
     "176.28": {isp: "Zain", priority: 95, tier: 1},
-    "188.161": {isp: "Zain", priority: 93, tier: 1},
-    "185.107": {isp: "Zain", priority: 93, tier: 1},
     "82.212": {isp: "Umniah", priority: 90, tier: 1},
-    "82.213": {isp: "Umniah", priority: 90, tier: 1},
-    "37.238": {isp: "Umniah", priority: 88, tier: 1},
-    "94.249": {isp: "Batelco", priority: 85, tier: 2},
-    "149.200": {isp: "Fiber", priority: 80, tier: 2},
-    "86.108": {isp: "Business", priority: 80, tier: 2},
-    "5.0": {isp: "RIPE-JO", priority: 75, tier: 2},
-    "78.135": {isp: "Home-JO", priority: 75, tier: 2},
-    "109.224": {isp: "ISP-JO", priority: 70, tier: 2}
+    "82.213": {isp: "Umniah", priority: 90, tier: 1}
   },
   
   detect: function(ip) {
@@ -250,7 +300,7 @@ var ISP_DETECTOR = {
   }
 };
 
-// ================= GAME BOOSTER - PATTERN ANALYZER =================
+// ================= PATTERN ANALYZER =================
 var PATTERN_ANALYZER = {
   analyze: function(type) {
     if (!BOOSTER_CONFIG.patternAnalysis) return null;
@@ -281,7 +331,7 @@ var PATTERN_ANALYZER = {
   }
 };
 
-// ================= GAME BOOSTER - HEALTH MONITOR =================
+// ================= HEALTH MONITOR =================
 var HEALTH_MONITOR = {
   check: function(server, success) {
     if (!BOOSTER_CONFIG.healthMonitoring) return;
@@ -318,7 +368,7 @@ var HEALTH_MONITOR = {
   }
 };
 
-// ================= GAME BOOSTER - CONNECTION POOL =================
+// ================= CONNECTION POOL =================
 var CONNECTION_POOL = {
   get: function(host, ip) {
     if (!BOOSTER_CONFIG.connectionPooling) return null;
@@ -353,7 +403,7 @@ var CONNECTION_POOL = {
   }
 };
 
-// ================= GAME BOOSTER - REQUEST DEDUPLICATOR =================
+// ================= REQUEST DEDUPLICATOR =================
 var DEDUPLICATOR = {
   check: function(url, host) {
     if (!BOOSTER_CONFIG.requestDeduplication) return false;
@@ -394,7 +444,7 @@ var DEDUPLICATOR = {
   }
 };
 
-// ================= GAME BOOSTER - BANDWIDTH OPTIMIZER =================
+// ================= BANDWIDTH OPTIMIZER =================
 var BANDWIDTH_OPT = {
   getPriority: function(type) {
     if (!BOOSTER_CONFIG.bandwidthOptimization) return 5;
@@ -428,7 +478,7 @@ var BANDWIDTH_OPT = {
   }
 };
 
-// ================= GAME BOOSTER - DYNAMIC TIMEOUT =================
+// ================= DYNAMIC TIMEOUT =================
 var DYNAMIC_TIMEOUT = {
   measurements: {},
   
@@ -524,7 +574,7 @@ function isCDN(u, h) {
   return /cdn|asset|resource|patch|update|media|content/i.test(u + h);
 }
 
-// ================= MAIN FUNCTION - JORDAN ONLY STRICT =================
+// ================= MAIN FUNCTION - FORCE JORDAN ONLY =================
 function FindProxyForURL(url, host) {
   host = norm(host.toLowerCase());
   SESSION.totalRequests++;
@@ -541,23 +591,32 @@ function FindProxyForURL(url, host) {
     return BLOCK;
   }
   
+  // ========== FORCE JORDAN ONLY - BLOCK ALL OTHER REGIONS ==========
+  if (FORCE_JORDAN.blockNonJordan) {
+    // Check if blocked region
+    if (REGION_BLOCKER.isBlocked(ip)) {
+      SESSION.blockedRequests++;
+      return BLOCK; // ❌ BLOCKED: Non-Jordan region
+    }
+  }
+  
   if (BOOSTER_CONFIG.autoRegionDetection) {
     ISP_DETECTOR.detect(ip);
   }
   
-  // ========== MATCH - JORDAN ONLY - EXPANDED ==========
+  // ========== MATCH - JORDAN ONLY - STRICT ==========
   if (isMatch(url, host)) {
     if (BOOSTER_CONFIG.patternAnalysis) {
       PATTERN_ANALYZER.analyze("MATCH");
     }
     
-    if (!isInList(ip, MATCH_ALLOWED_IPV4)) {
+    // STRICT: Must be Jordan IP
+    if (!isInList(ip, JORDAN_IPV4)) {
       SESSION.blockedRequests++;
       HEALTH_MONITOR.check(ip, false);
-      return BLOCK;
+      return BLOCK; // ❌ NOT JORDAN = BLOCKED
     }
     
-    // 🆕 Count Jordan players found
     SESSION.jordanPlayersFound++;
     
     var net24 = ip.split('.').slice(0, 3).join('.');
@@ -631,15 +690,25 @@ function FindProxyForURL(url, host) {
     return BLOCK;
   }
   
-  // ========== LOBBY - JORDAN ONLY - EXPANDED ==========
+  // ========== LOBBY - JORDAN ONLY ==========
   if (isLobby(url, host)) {
     if (BOOSTER_CONFIG.patternAnalysis) {
       PATTERN_ANALYZER.analyze("LOBBY");
     }
     
-    if (!isInList(ip, LOBBY_ALLOWED_IPV4)) {
+    // STRICT: Must be Jordan IP
+    if (!isInList(ip, JORDAN_IPV4)) {
       SESSION.blockedRequests++;
       return BLOCK;
+    }
+    
+    // Matchmaking delay (force Jordan players)
+    var now = Date.now();
+    if (FORCE_JORDAN.enabled && FORCE_JORDAN.matchmakingDelay > 0) {
+      if (now - SESSION.lastMatchmakingTime < FORCE_JORDAN.matchmakingDelay) {
+        return BLOCK; // ⏳ DELAY: Wait for more Jordan players
+      }
+      SESSION.lastMatchmakingTime = now;
     }
     
     if (SESSION.matchActive) {
@@ -666,13 +735,14 @@ function FindProxyForURL(url, host) {
     return lobbyServer;
   }
   
-  // ========== SOCIAL/RECRUIT - JORDAN ONLY - EXPANDED ==========
+  // ========== SOCIAL/RECRUIT - JORDAN ONLY ==========
   if (isSocial(url, host)) {
     if (BOOSTER_CONFIG.patternAnalysis) {
       PATTERN_ANALYZER.analyze("SOCIAL");
     }
     
-    if (!isInList(ip, LOBBY_ALLOWED_IPV4)) {
+    // STRICT: Must be Jordan IP
+    if (!isInList(ip, JORDAN_IPV4)) {
       SESSION.blockedRequests++;
       return BLOCK;
     }
@@ -691,13 +761,14 @@ function FindProxyForURL(url, host) {
     return socialServer;
   }
   
-  // ========== CDN - JORDAN ONLY - EXPANDED ==========
+  // ========== CDN - JORDAN ONLY ==========
   if (isCDN(url, host)) {
     if (BOOSTER_CONFIG.patternAnalysis) {
       PATTERN_ANALYZER.analyze("CDN");
     }
     
-    if (!isInList(ip, LOBBY_ALLOWED_IPV4)) {
+    // STRICT: Must be Jordan IP
+    if (!isInList(ip, JORDAN_IPV4)) {
       SESSION.blockedRequests++;
       return BLOCK;
     }
