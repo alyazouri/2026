@@ -1,16 +1,18 @@
-// ================= PROXIES =================
+// ================= GAME BOOSTER – FAST FULL =================
+
+// ===== MAIN MATCH PROXY (LOW LATENCY) =====
 var MATCH_JO = "PROXY 46.185.131.218:20001";
 
+// ===== LOBBY / CDN (LIMITED FOR STABILITY) =====
 var LOBBY_POOL = [
-  "PROXY 212.35.66.45:8085",
-  "PROXY 212.35.66.45:8181",
-  "PROXY 46.185.131.218:443"
+  "PROXY 46.185.131.218:443",
+  "PROXY 212.35.66.45:8085"
 ];
 
 var BLOCK  = "PROXY 127.0.0.1:9";
 var DIRECT = "DIRECT";
 
-// ================= JORDAN MATCH (STRONG) =================
+// ================= JORDAN MATCH (HARD) =================
 var JORDAN_MATCH_IPV4 = [
   ["82.212.64.0","255.255.192.0"],
   ["94.249.0.0","255.255.128.0"],
@@ -20,58 +22,26 @@ var JORDAN_MATCH_IPV4 = [
   ["213.6.0.0","255.255.0.0"]
 ];
 
-// ================= JORDAN WIDE (LOBBY) =================
+// ================= JORDAN ONLY (NO FALLBACK) =================
 var JORDAN_WIDE_IPV4 = [
   ["82.212.0.0","255.255.0.0"],
   ["94.249.0.0","255.255.0.0"],
   ["176.28.0.0","255.252.0.0"],
   ["176.29.0.0","255.255.0.0"],
-  ["109.107.0.0","255.255.0.0"],
-  ["31.153.0.0","255.255.0.0"],
-  ["188.123.160.0","255.255.224.0"],
   ["212.35.0.0","255.255.0.0"],
   ["213.6.0.0","255.255.0.0"],
-  ["46.185.0.0","255.255.0.0"],
-  ["185.107.0.0","255.255.0.0"],
-  ["195.229.0.0","255.254.0.0"]
+  ["46.185.0.0","255.255.0.0"]
 ];
 
-// ================= BLACKLIST: EU + RUSSIA + ASIA =================
-var GEO_BLACKLIST = [
-
-  // Europe (wide)
-  ["5.0.0.0","255.0.0.0"],
-  ["37.0.0.0","255.0.0.0"],
-  ["51.0.0.0","255.0.0.0"],
-
-  // Russia
-  ["5.136.0.0","255.248.0.0"],
-  ["31.128.0.0","255.192.0.0"],
-  ["46.16.0.0","255.240.0.0"],
-  ["95.24.0.0","255.248.0.0"],
-  ["178.64.0.0","255.192.0.0"],
-
-  // Asia (far & wide)
-  ["1.0.0.0","255.0.0.0"],
-  ["14.0.0.0","255.0.0.0"],
-  ["27.0.0.0","255.0.0.0"],
-  ["36.0.0.0","255.0.0.0"],
-  ["39.0.0.0","255.0.0.0"],
-  ["42.0.0.0","255.0.0.0"],
-  ["49.0.0.0","255.0.0.0"],
-  ["58.0.0.0","255.0.0.0"],
-  ["59.0.0.0","255.0.0.0"],
-  ["60.0.0.0","255.0.0.0"]
-];
-
-// ================= SESSION =================
+// ================= SESSION BOOST LOCK =================
 var SESSION = {
   matchNet: null,
   matchHost: null,
-  dnsCache: {}
+  dnsCache: {},
+  locked: false
 };
 
-// ================= HELPERS =================
+// ================= FAST HELPERS =================
 function norm(h){
   var i=h.indexOf(":");
   return i>-1 ? h.substring(0,i) : h;
@@ -90,53 +60,49 @@ function resolvePinned(host){
   return ip;
 }
 
-function pickLobbyProxy(host){
-  var h=0;
-  for (var i=0;i<host.length;i++)
-    h=(h+host.charCodeAt(i))%LOBBY_POOL.length;
-  return LOBBY_POOL[h];
+function pickLobbyProxy(){
+  return LOBBY_POOL[0]; // ثابت = jitter أقل
 }
 
-// ================= DETECTION =================
-function isPUBG(h){
+// ================= GAME TRAFFIC DETECTION =================
+function isGAME(h){
   return /pubg|pubgm|tencent|krafton|lightspeed|levelinfinite/i.test(h);
 }
+
 function isMatch(u,h){
-  return /match|battle|game|combat|realtime|sync|udp|tick|room/i.test(u+h);
+  return /match|battle|combat|realtime|sync|udp|tick|room|game/i.test(u+h);
 }
+
 function isLobby(u,h){
-  return /lobby|matchmaking|queue|dispatch|gateway|region|join|recruit/i.test(u+h);
+  return /lobby|matchmaking|queue|dispatch|gateway|join|region/i.test(u+h);
 }
-function isSocial(u,h){
-  return /friend|invite|squad|team|party|clan|presence|social/i.test(u+h);
-}
+
 function isCDN(u,h){
   return /cdn|asset|resource|patch|update|media|content/i.test(u+h);
 }
 
-// ================= MAIN =================
+// ================= MAIN BOOST ENGINE =================
 function FindProxyForURL(url, host) {
 
   host = norm(host.toLowerCase());
-  if (!isPUBG(host)) return DIRECT;
+
+  // خارج اللعبة = مباشر
+  if (!isGAME(host)) return DIRECT;
 
   var ip = resolvePinned(host);
   if (!ip || ip.indexOf(":")>-1) return BLOCK;
 
-  // HARD GEO BLOCK
-  if (isInList(ip, GEO_BLACKLIST)) return BLOCK;
-
-  // MATCH (STRONG ONLY)
+  // ===== MATCH نشان السرعة القصوى =====
   if (isMatch(url, host)) {
 
     if (!isInList(ip, JORDAN_MATCH_IPV4)) return BLOCK;
 
     var net24 = ip.split('.').slice(0,3).join('.');
 
-    if (!SESSION.matchNet) {
+    if (!SESSION.locked) {
       SESSION.matchNet  = net24;
       SESSION.matchHost = host;
-      return MATCH_JO;
+      SESSION.locked    = true;
     }
 
     if (host !== SESSION.matchHost) return BLOCK;
@@ -145,11 +111,12 @@ function FindProxyForURL(url, host) {
     return MATCH_JO;
   }
 
-  // LOBBY / SOCIAL / CDN
-  if (isLobby(url, host) || isSocial(url, host) || isCDN(url, host)) {
+  // ===== LOBBY / CDN (SAFE ONLY) =====
+  if (isLobby(url, host) || isCDN(url, host)) {
     if (!isInList(ip, JORDAN_WIDE_IPV4)) return BLOCK;
-    return pickLobbyProxy(host);
+    return pickLobbyProxy();
   }
 
-  return pickLobbyProxy(host);
+  // أي شيء ثاني = منع
+  return BLOCK;
 }
