@@ -72,7 +72,7 @@ var JORDAN_IP_RANGES = {
   
   init: function() {
     var rawRanges = [
-  ["213.6.0.0","255.255.0.0"]
+  ["109.107.0.0","255.255.0.0"]
     ];
     
     // Process ranges
