@@ -27,8 +27,6 @@ var JORDAN_MATCH_IPV4 = [
 
 // ================= JORDAN WIDE (LOBBY) =================
 var JORDAN_WIDE_IPV4 = [
-// ================= JORDAN WIDE (LOBBY) =================
-var JORDAN_WIDE_IPV4 = [
 
   // Orange
   ["194.165.128.0","255.255.224.0"],
