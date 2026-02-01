@@ -13,7 +13,7 @@ var DIRECT = "DIRECT";
 // ================= JORDAN MATCH (STRICT) =================
 // Confirmed from real traceroute analysis (JO backbone + hosting)
 var JORDAN_MATCH_IPV4 = [
-  ["149.200.128.0", "255.255.128.0"],
+  ["151.236.160.0", "255.255.224.0"],
   ["86.108.0.0",    "255.255.128.0"],   // go.com.jo / Gov / Orange
   ["82.212.0.0",    "255.255.0.0"],     // Zain / Umniah backbone
   ["213.139.48.0",  "255.255.252.0"],   // Orange core
@@ -23,7 +23,7 @@ var JORDAN_MATCH_IPV4 = [
 
 // ================= JORDAN WIDE (LOBBY / SOCIAL / CDN) =================
 var JORDAN_WIDE_IPV4 = [
-  ["149.200.128.0", "255.255.128.0"],
+  ["151.236.160.0", "255.255.224.0"],
   ["86.108.0.0",    "255.255.128.0"],
   ["82.212.0.0",    "255.255.0.0"],
   ["213.139.48.0",  "255.255.252.0"],
