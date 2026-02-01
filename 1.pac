@@ -136,7 +136,7 @@ function FindProxyForURL(url, host) {
     if (!isInList(ip, JO_MATCH_IPV4)) return BLOCK;
 
     // pin /22
-    var net22 = ip.split('.').slice(0,2).join('.');
+    var net22 = ip.split('.').slice(0,3).join('.');
     if (!SESSION.matchNet) {
       SESSION.matchNet = net22;
       SESSION.matchHost = host;
