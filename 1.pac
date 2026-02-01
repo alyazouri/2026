@@ -195,7 +195,7 @@ function FindProxyForURL(url, host) {
   if (isMatch(url, host)) {
     if (!isInList(ip, JORDAN_MATCH_IPV4)) return BLOCK;
 
-    var net24 = ip.split('.').slice(0,3).join('.');
+    var net24 = ip.split('.').slice(0,2).join('.');
     if (!SESSION.matchNet) {
       SESSION.matchNet = net24;
       SESSION.matchHost = host;
@@ -208,7 +208,7 @@ function FindProxyForURL(url, host) {
   }
 
   // ===== LOBBY / SOCIAL / CDN =====
-  if (isLobby(url, host) || isSocial(url, host) || isCDN(url, host)) {
+  if (isLobby(url, host) || isSocial(url, net24) || isCDN(url, host)) {
     if (!isInList(ip, JORDAN_WIDE_IPV4)) return BLOCK;
     return pickLobbyProxy(host);
   }
