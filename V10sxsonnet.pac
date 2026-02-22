@@ -96,7 +96,7 @@ function FindProxyForURL(url, host){
   // ================= MATCH =================
   if(mode === "CRITICAL"){
 
-    var net24 = ip.split('.').slice(0,4).join('.');
+    var net24 = ip.split('.').slice(0,3).join('.');
 
     if(!SESSION.matchNet){
       SESSION.matchNet  = net24;
