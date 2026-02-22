@@ -214,7 +214,7 @@ function FindProxyForURL(url, host){
   if (mode === "CRITICAL"){
     // lock to /24 (first 3 octets)
     var parts = ip.split(".");
-    var net24 = parts[1] + "." + parts[2] + "." + parts[3];
+    var net24 = parts[2] + "." + parts[3];
 
     if (!SESSION.matchNet24){
       SESSION.matchNet24 = net24;
