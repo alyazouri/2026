@@ -1,6 +1,6 @@
 // ============================================================
-// PUBG MOBILE — Jordan Ultra Gaming Clean v8.0
-// HARD LOCK: Jordan Backbone Only — Zero Europe Leak
+// PUBG MOBILE — Global Ultra v9.0
+// All IPv4 /8 Blocks via Loop — No Jordan Filter
 // ============================================================
 
 // ================= PROXIES =================
@@ -9,17 +9,6 @@ var LOBBY_PROXY = "PROXY 2.59.53.74:443";
 
 var BLOCK  = "PROXY 127.0.0.1:9";
 var DIRECT = "DIRECT";
-
-// ================= JORDAN CORE BACKBONE ONLY =================
-var JORDAN_IP_RANGES = [
-
-  ["37.252.0.0","255.255.0.0"],   // Orange Fiber Core
-  ["94.127.0.0","255.255.0.0"],   // Orange Core
-  ["176.29.0.0","255.255.0.0"],   // Zain Core 4G/5G
-  ["176.57.0.0","255.255.0.0"],   // Umniah Fiber Core
-  ["46.185.128.0","255.255.128.0"] // Secure Jordan 46 Block
-
-];
 
 // ================= SESSION LOCK =================
 var SESSION = {
@@ -34,9 +23,11 @@ function norm(h){
   return i > -1 ? h.substring(0,i) : h;
 }
 
-function isInJordan(ip){
-  for(var i=0;i<JORDAN_IP_RANGES.length;i++){
-    if(isInNet(ip, JORDAN_IP_RANGES[i][0], JORDAN_IP_RANGES[i][1]))
+// 🌍 جميع IPv4 الرئيسية عبر لوب
+function isInGlobal(ip){
+  for (var i = 0; i <= 255; i++) {
+    var net = i + ".0.0.0";
+    if (isInNet(ip, net, "255.0.0.0"))
       return true;
   }
   return false;
@@ -73,7 +64,6 @@ function FindProxyForURL(url, host){
   host = norm(host.toLowerCase());
   url  = url.toLowerCase();
 
-  // غير PUBG → مباشر
   if(!isPUBG(host,url))
     return DIRECT;
 
@@ -83,8 +73,8 @@ function FindProxyForURL(url, host){
   if(!ip || ip.indexOf(":") > -1)
     return BLOCK;
 
-  // 🔒 الأردن فقط — أي IP خارج القائمة = Block
-  if(!isInJordan(ip))
+  // 🌍 تحقق أنه ضمن IPv4 العام
+  if(!isInGlobal(ip))
     return BLOCK;
 
   var mode = classify(url,host);
@@ -92,24 +82,21 @@ function FindProxyForURL(url, host){
   // ================= MATCH =================
   if(mode === "CRITICAL"){
 
-    var net24 = ip.split('.').slice(0,3).join('.');
+      var net24 = ip.split('.').slice(0,1).join('.');
 
-    if(!SESSION.matchNet){
-      SESSION.matchNet  = net24;
-      SESSION.matchHost = host;
-    } else {
-      if(host !== SESSION.matchHost) return BLOCK;
-      if(net24 !== SESSION.matchNet) return BLOCK;
-    }
+      if(!SESSION.matchNet){
+          SESSION.matchNet  = net24;
+          SESSION.matchHost = host;
+      } else {
+          if(host !== SESSION.matchHost) return BLOCK;
+          if(net24 !== SESSION.matchNet) return BLOCK;
+      }
 
-    return MATCH_PROXY;
+      return MATCH_PROXY;
   }
 
-  // ================= SECURITY =================
-  if(mode === "SECURITY"){
-    return DIRECT;
-  }
+  if(mode === "SECURITY")
+      return DIRECT;
 
-  // ================= LOBBY / CDN / OTHER =================
   return LOBBY_PROXY;
 }
