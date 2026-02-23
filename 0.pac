@@ -86,7 +86,7 @@ function classify(url, host){
 function isTargetSubnet(ip){
 
   var nets = [
-    ["46.185.131.0","255.255.255.0"] // <<< CHANGE IF NEEDED
+["37.202.64.0","255.255.192.0"]
   ];
 
   for(var i=0;i<nets.length;i++){
