@@ -86,7 +86,9 @@ function classify(url, host){
 function isTargetSubnet(ip){
 
   var nets = [
-["79.134.128.0","255.255.240.0"]
+  ["46.23.112.0","255.255.240.0"],
+  ["46.248.192.0","255.255.224.0"],
+  ["46.185.128.0","255.255.128.0"]
   ];
 
   for(var i=0;i<nets.length;i++){
